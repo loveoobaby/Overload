@@ -12,35 +12,37 @@
 
 #include <stb_image/stb_image.h>
 
+// GLFW的window和Overload自定义的window对应起来，此后各种代码实际上都以此为基础。
+// 先创造Overload的window，再转到GLFW进行各种操作，使得代码结构清晰，并且实现较为简单，都可以通过GLFW进行。
 std::unordered_map<GLFWwindow*, OvWindowing::Window*> OvWindowing::Window::__WINDOWS_MAP;
 
 OvWindowing::Window::Window(const Context::Device& p_device, const Settings::WindowSettings& p_windowSettings) :
 	m_device(p_device),
-	m_title(p_windowSettings.title),
-	m_size{ p_windowSettings.width, p_windowSettings.height },
-	m_minimumSize { p_windowSettings.minimumWidth, p_windowSettings.minimumHeight },
-	m_maximumSize { p_windowSettings.maximumWidth, p_windowSettings.maximumHeight },
-	m_fullscreen(p_windowSettings.fullscreen),
-	m_refreshRate(p_windowSettings.refreshRate),
-	m_cursorMode(p_windowSettings.cursorMode),
+	m_title(p_windowSettings.title),  // 窗口标题
+	m_size{ p_windowSettings.width, p_windowSettings.height }, // 窗口的大小
+	m_minimumSize { p_windowSettings.minimumWidth, p_windowSettings.minimumHeight }, // 窗口的最小宽高
+	m_maximumSize { p_windowSettings.maximumWidth, p_windowSettings.maximumHeight }, // 窗口的最大宽高
+	m_fullscreen(p_windowSettings.fullscreen),  // 是否全屏
+	m_refreshRate(p_windowSettings.refreshRate), // 窗口刷新频率
+	m_cursorMode(p_windowSettings.cursorMode), // 光标模式
 	m_cursorShape(p_windowSettings.cursorShape)
 {
 	/* Window creation */
-	CreateGlfwWindow(p_windowSettings);
+	CreateGlfwWindow(p_windowSettings); // 创建窗口
 
 	/* Window settings */
 	SetCursorMode(p_windowSettings.cursorMode);
 	SetCursorShape(p_windowSettings.cursorShape);
 
 	/* Callback binding */
-	BindKeyCallback();
-	BindMouseCallback();
-	BindIconifyCallback();
-	BindCloseCallback();
-	BindResizeCallback();
+	BindKeyCallback(); // 绑定键盘按键回调
+	BindMouseCallback(); // 鼠标回调
+	BindIconifyCallback(); // 最小化回调
+	BindCloseCallback();   // 关闭窗口回调
+	BindResizeCallback();  // 大小改变回调
 	BindCursorMoveCallback();
 	BindFramebufferResizeCallback();
-	BindMoveCallback();
+	BindMoveCallback(); // 移动回调
 	BindFocusCallback();
 
 	/* Event listening */
@@ -50,9 +52,11 @@ OvWindowing::Window::Window(const Context::Device& p_device, const Settings::Win
 
 OvWindowing::Window::~Window()
 {
+	// 销毁窗口
 	glfwDestroyWindow(m_glfwWindow);
 }
 
+// 设置窗口的icon
 void OvWindowing::Window::SetIcon(const std::string & p_filePath)
 {
 	GLFWimage images[1];
@@ -74,11 +78,13 @@ OvWindowing::Window* OvWindowing::Window::FindInstance(GLFWwindow* p_glfwWindow)
 	return __WINDOWS_MAP.find(p_glfwWindow) != __WINDOWS_MAP.end() ? __WINDOWS_MAP[p_glfwWindow] : nullptr;
 }
 
+// 设置Window的大小
 void OvWindowing::Window::SetSize(uint16_t p_width, uint16_t p_height)
 {
 	glfwSetWindowSize(m_glfwWindow, static_cast<int>(p_width), static_cast<int>(p_height));
 }
 
+// 设置最小Size
 void OvWindowing::Window::SetMinimumSize(int16_t p_minimumWidth, int16_t p_minimumHeight)
 {
 	m_minimumSize.first = p_minimumWidth;
@@ -87,6 +93,7 @@ void OvWindowing::Window::SetMinimumSize(int16_t p_minimumWidth, int16_t p_minim
 	UpdateSizeLimit();
 }
 
+// 设置最大Size
 void OvWindowing::Window::SetMaximumSize(int16_t p_maximumWidth, int16_t p_maximumHeight)
 {
 	m_maximumSize.first = p_maximumWidth;
@@ -206,6 +213,7 @@ bool OvWindowing::Window::IsDecorated() const
 	return glfwGetWindowAttrib(m_glfwWindow, GLFW_DECORATED) == GLFW_TRUE;;
 }
 
+// 这个函数是用来把我们窗口的环境给到一个线程，也就是咱们的窗口准备好了
 void OvWindowing::Window::MakeCurrentContext() const
 {
 	glfwMakeContextCurrent(m_glfwWindow);
@@ -266,6 +274,7 @@ std::pair<int16_t, int16_t> OvWindowing::Window::GetMaximumSize() const
 	return m_maximumSize;
 }
 
+// 获取当前窗口的位置
 std::pair<int16_t, int16_t> OvWindowing::Window::GetPosition() const
 {
 	int x, y;
@@ -307,6 +316,7 @@ void OvWindowing::Window::CreateGlfwWindow(const Settings::WindowSettings& p_win
 	if (m_fullscreen)
 		selectedMonitor = glfwGetPrimaryMonitor();
 
+	// 设置GLFW窗口参数
 	glfwWindowHint(GLFW_RESIZABLE,		p_windowSettings.resizable);
 	glfwWindowHint(GLFW_DECORATED,		p_windowSettings.decorated);
 	glfwWindowHint(GLFW_FOCUSED,		p_windowSettings.focused);
@@ -317,6 +327,7 @@ void OvWindowing::Window::CreateGlfwWindow(const Settings::WindowSettings& p_win
 	glfwWindowHint(GLFW_REFRESH_RATE,	p_windowSettings.refreshRate);
 	glfwWindowHint(GLFW_SAMPLES,		p_windowSettings.samples);
 
+	// 创建窗口
 	m_glfwWindow = glfwCreateWindow(static_cast<int>(m_size.first), static_cast<int>(m_size.second), m_title.c_str(), selectedMonitor, nullptr);
 
 	if (!m_glfwWindow)
@@ -325,13 +336,13 @@ void OvWindowing::Window::CreateGlfwWindow(const Settings::WindowSettings& p_win
 	}
 	else
 	{
-		UpdateSizeLimit();
+		UpdateSizeLimit(); // 设置窗口缩放的最大最小值
 
 		auto[x, y] = GetPosition();
 		m_position.first = x;
 		m_position.second = y;
 
-		__WINDOWS_MAP[m_glfwWindow] = this;
+		__WINDOWS_MAP[m_glfwWindow] = this; // 将GLFW窗口放入map中， glfwWindow->Window
 	}
 }
 
@@ -339,21 +350,25 @@ void OvWindowing::Window::BindKeyCallback() const
 {
 	auto keyCallback = [](GLFWwindow* p_window, int p_key, int p_scancode, int p_action, int p_mods)
 	{
-		Window* windowInstance = FindInstance(p_window);
+		Window* windowInstance = FindInstance(p_window); //找到GLFW窗口对应的Window对象
 
 		if (windowInstance)
 		{
+			// 按键被按下
 			if (p_action == GLFW_PRESS)
 				windowInstance->KeyPressedEvent.Invoke(p_key);
 
+			// 按键释放
 			if (p_action == GLFW_RELEASE)
 				windowInstance->KeyReleasedEvent.Invoke(p_key);
 		}
 	};
 
+	// 设置按键的回调
 	glfwSetKeyCallback(m_glfwWindow, keyCallback);
 }
 
+// 绑定鼠标回调事件
 void OvWindowing::Window::BindMouseCallback() const
 {
 	auto mouseCallback = [](GLFWwindow* p_window, int p_button, int p_action, int p_mods)
@@ -502,6 +517,7 @@ void OvWindowing::Window::OnMove(int16_t p_x, int16_t p_y)
 	}
 }
 
+// 设置窗口宽高的最大最小值
 void OvWindowing::Window::UpdateSizeLimit() const
 {
 	glfwSetWindowSizeLimits

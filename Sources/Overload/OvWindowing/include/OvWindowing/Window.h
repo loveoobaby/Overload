@@ -319,7 +319,7 @@ namespace OvWindowing
 
 		/* Window settings */
 		std::string m_title;
-		std::pair<uint16_t, uint16_t> m_size;
+		std::pair<uint16_t, uint16_t> m_size; // 窗口的大小
 		std::pair<int16_t, int16_t> m_minimumSize;
 		std::pair<int16_t, int16_t> m_maximumSize;
 		std::pair<int16_t, int16_t> m_position;

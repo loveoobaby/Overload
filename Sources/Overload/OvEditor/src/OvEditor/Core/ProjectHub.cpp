@@ -36,8 +36,8 @@ public:
 		m_path(p_path),
 		m_projectName(p_projectName)
 	{
-		resizable = false;
-		movable = false;
+		resizable = true;
+		movable = true;
 		titleBar = false;
 
 		std::filesystem::create_directories(std::string(getenv("APPDATA")) + "\\OverloadTech\\OvEditor\\");
@@ -65,13 +65,14 @@ public:
 		openProjectButton.idleBackgroundColor = { 0.7f, 0.5f, 0.f };
 		newProjectButton.idleBackgroundColor = { 0.f, 0.5f, 0.0f };
 
+		// 打开工程按钮的回调
 		openProjectButton.ClickedEvent += [this]
 		{
-			OvWindowing::Dialogs::OpenFileDialog dialog("Open project");
-			dialog.AddFileType("Overload Project", "*.ovproject");
-			dialog.Show();
+			OvWindowing::Dialogs::OpenFileDialog dialog("Open project"); // 打开文件对话框
+			dialog.AddFileType("Overload Project", "*.ovproject"); // 文件窗口的title、打开文件的类型
+			dialog.Show(); // 显示文件窗口
 
-			std::string ovProjectPath = dialog.GetSelectedFilePath();
+			std::string ovProjectPath = dialog.GetSelectedFilePath(); // 获取打开文件的路径
 			std::string rootFolderPath = OvTools::Utils::PathParser::GetContainingFolder(ovProjectPath);
 
 			if (dialog.HasSucceeded())
@@ -81,6 +82,7 @@ public:
 			}
 		};
 
+		// 新建文件的回调
 		newProjectButton.ClickedEvent += [this, &pathField]
 		{
 			OvWindowing::Dialogs::SaveFileDialog dialog("New project location");
@@ -288,7 +290,7 @@ void OvEditor::Core::ProjectHub::SetupContext()
 
 	/* Window creation */
 	m_device = std::make_unique<OvWindowing::Context::Device>(deviceSettings);
-	m_window = std::make_unique<OvWindowing::Window>(*m_device, windowSettings);
+	m_window = std::make_unique<OvWindowing::Window>(*m_device, windowSettings); // 创建Project hub窗口
 	m_window->MakeCurrentContext();
 
 	auto[monWidth, monHeight] = m_device->GetMonitorSize();
@@ -300,8 +302,8 @@ void OvEditor::Core::ProjectHub::SetupContext()
 	m_renderer = std::make_unique<OvRendering::Core::Renderer>(*m_driver);
 	m_renderer->SetCapability(OvRendering::Settings::ERenderingCapability::MULTISAMPLE, true);
 
-	m_uiManager = std::make_unique<OvUI::Core::UIManager>(m_window->GetGlfwWindow(), OvUI::Styling::EStyle::ALTERNATIVE_DARK);
-	m_uiManager->LoadFont("Ruda_Big", "Data\\Editor\\Fonts\\Ruda-Bold.ttf", 18);
+	m_uiManager = std::make_unique<OvUI::Core::UIManager>(m_window->GetGlfwWindow(), OvUI::Styling::EStyle::IM_LIGHT_STYLE);
+	m_uiManager->LoadFont("Ruda_Big", "Data\\Editor\\Fonts\\Ruda-Bold.ttf", 18); 
 	m_uiManager->UseFont("Ruda_Big");
 	m_uiManager->EnableEditorLayoutSave(false);
 	m_uiManager->EnableDocking(false);

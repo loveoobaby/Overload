@@ -81,13 +81,13 @@ void OvEditor::Core::Editor::PreUpdate()
 
 void OvEditor::Core::Editor::Update(float p_deltaTime)
 {
-	HandleGlobalShortcuts();
-	UpdateCurrentEditorMode(p_deltaTime);
-	PrepareRendering(p_deltaTime);
-	UpdateEditorPanels(p_deltaTime);
-	RenderViews(p_deltaTime);
-	RenderEditorUI(p_deltaTime);
-	m_editorActions.ExecuteDelayedActions();
+	HandleGlobalShortcuts(); // 处理删除物体
+	UpdateCurrentEditorMode(p_deltaTime); // 更改显示模式，有Play模式和Edit模式
+	PrepareRendering(p_deltaTime); // 用来给渲染做准备，具体则是绑定各种buffer(缓冲区)和data(数据)
+	UpdateEditorPanels(p_deltaTime); // 更新编辑面板，也很好懂，具体来讲会对各个子面板都做更新
+	RenderViews(p_deltaTime); // 做渲染，包括asset，scene和game三个视界，是引擎表现的主体
+	RenderEditorUI(p_deltaTime); // 于渲染面板，即非视界的各部分，编写代码的基础是imGui
+	m_editorActions.ExecuteDelayedActions(); // 用来执行各种此帧内应该执行的操作，之所以是delay，是为了防止与渲染产生冲突，同时不实时执行也能更好的组织，防止操作之间冲突。
 }
 
 void OvEditor::Core::Editor::HandleGlobalShortcuts()

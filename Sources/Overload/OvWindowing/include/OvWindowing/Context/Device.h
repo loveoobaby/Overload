@@ -21,6 +21,7 @@ namespace OvWindowing::Context
 	/**
 	* The Device represents the windowing context. It is necessary to create a device
 	* to create a window
+	* 提供一个OpenGL环境来显示窗口
 	*/
 	class Device
 	{

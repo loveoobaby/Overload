@@ -168,10 +168,10 @@ namespace OvRendering::LowRenderer
 		OvMaths::FMatrix4 CalculateViewMatrix(const OvMaths::FVector3& p_position, const OvMaths::FQuaternion& p_rotation) const;
 
 	private:
-		OvRendering::Data::Frustum m_frustum;
-		OvMaths::FMatrix4 m_viewMatrix;
-		OvMaths::FMatrix4 m_projectionMatrix;
-        OvRendering::Settings::EProjectionMode m_projectionMode;
+		OvRendering::Data::Frustum m_frustum; // 视锥体
+		OvMaths::FMatrix4 m_viewMatrix;       // 视图矩阵
+		OvMaths::FMatrix4 m_projectionMatrix; // 投影矩阵
+        OvRendering::Settings::EProjectionMode m_projectionMode; // 投影相机模式
 
 		float m_fov;
         float m_size;

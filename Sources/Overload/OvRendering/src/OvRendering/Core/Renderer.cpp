@@ -12,11 +12,13 @@ OvRendering::Core::Renderer::Renderer(Context::Driver& p_driver) : m_driver(p_dr
 {
 }
 
+// 设置清屏颜色
 void OvRendering::Core::Renderer::SetClearColor(float p_red, float p_green, float p_blue, float p_alpha)
 {
 	glClearColor(p_red, p_green, p_blue, p_alpha);
 }
 
+// 清屏缓冲器
 void OvRendering::Core::Renderer::Clear(bool p_colorBuffer, bool p_depthBuffer, bool p_stencilBuffer)
 {
 	glClear
@@ -201,17 +203,24 @@ void OvRendering::Core::Renderer::ClearFrameInfo()
 	m_frameInfo.polyCount		= 0;
 }
 
+/**
+* 绘制网格
+* p_mesh（网格信息）
+* p_primitiveMode（绘制网格的模式）
+* p_instances（绘制实例的数量）
+*/
 void OvRendering::Core::Renderer::Draw(Resources::IMesh& p_mesh, Settings::EPrimitiveMode p_primitiveMode, uint32_t p_instances)
 {
 	if (p_instances > 0)
 	{
+		// 更新frameInfo，记录渲染的数量信息
 		++m_frameInfo.batchCount;
 		m_frameInfo.instanceCount += p_instances;
 		m_frameInfo.polyCount += (p_mesh.GetIndexCount() / 3) * p_instances;
 
 		p_mesh.Bind();
 		
-		if (p_mesh.GetIndexCount() > 0)
+		if (p_mesh.GetIndexCount() > 0) // 使用EBO进行渲染
 		{
 			/* With EBO */
 			if (p_instances == 1)
@@ -221,7 +230,7 @@ void OvRendering::Core::Renderer::Draw(Resources::IMesh& p_mesh, Settings::EPrim
 		}
 		else
 		{
-			/* Without EBO */
+			/* Without EBO */  //使用VBO进行渲染
 			if (p_instances == 1)
 				glDrawArrays(static_cast<GLenum>(p_primitiveMode), 0, p_mesh.GetVertexCount());
 			else
@@ -232,6 +241,9 @@ void OvRendering::Core::Renderer::Draw(Resources::IMesh& p_mesh, Settings::EPrim
 	}
 }
 
+/*
+* 获取视锥体内部的网格
+*/
 std::vector<std::reference_wrapper<OvRendering::Resources::Mesh>> OvRendering::Core::Renderer::GetMeshesInFrustum
 (
 	const OvRendering::Resources::Model& p_model,
@@ -241,12 +253,14 @@ std::vector<std::reference_wrapper<OvRendering::Resources::Mesh>> OvRendering::C
 	OvRendering::Settings::ECullingOptions p_cullingOptions
 )
 {
+	// 是否开启视锥体裁剪
 	const bool frustumPerModel = OvRendering::Settings::IsFlagSet(Settings::ECullingOptions::FRUSTUM_PER_MODEL, p_cullingOptions);
 
 	if (!frustumPerModel || p_frustum.BoundingSphereInFrustum(p_modelBoundingSphere, p_modelTransform))
 	{
 		std::vector<std::reference_wrapper<OvRendering::Resources::Mesh>> result;
 
+		// 是否开启网格视锥体裁剪
 		const bool frustumPerMesh = OvRendering::Settings::IsFlagSet(Settings::ECullingOptions::FRUSTUM_PER_MESH, p_cullingOptions);
 
 		const auto& meshes = p_model.GetMeshes();
@@ -256,7 +270,7 @@ std::vector<std::reference_wrapper<OvRendering::Resources::Mesh>> OvRendering::C
 			// Do not check if the mesh is in frustum if the model has only one mesh, because model and mesh bounding sphere are equals
 			if (meshes.size() == 1 || !frustumPerMesh || p_frustum.BoundingSphereInFrustum(mesh->GetBoundingSphere(), p_modelTransform))
 			{
-				result.emplace_back(*mesh);
+				result.emplace_back(*mesh); // 在视锥体中的网格
 			}
 		}
 
@@ -266,6 +280,9 @@ std::vector<std::reference_wrapper<OvRendering::Resources::Mesh>> OvRendering::C
 	return {};
 }
 
+/**
+* 获取渲染管线的状态
+*/
 uint8_t OvRendering::Core::Renderer::FetchGLState()
 {
 	using namespace OvRendering::Settings;
@@ -275,11 +292,11 @@ uint8_t OvRendering::Core::Renderer::FetchGLState()
 	GLboolean cMask[4];
 	glGetBooleanv(GL_COLOR_WRITEMASK, cMask);
 
-	if (GetBool(GL_DEPTH_WRITEMASK))						result |= 0b0000'0001;
-	if (cMask[0])											result |= 0b0000'0010;
-	if (GetCapability(ERenderingCapability::BLEND))			result |= 0b0000'0100;
-	if (GetCapability(ERenderingCapability::CULL_FACE))		result |= 0b0000'1000;
-	if (GetCapability(ERenderingCapability::DEPTH_TEST))	result |= 0b0001'0000;
+	if (GetBool(GL_DEPTH_WRITEMASK))						result |= 0b0000'0001; // 是否深度缓冲可写
+	if (cMask[0])											result |= 0b0000'0010; // 是否颜色缓冲可写
+	if (GetCapability(ERenderingCapability::BLEND))			result |= 0b0000'0100; // 是否开启混合
+	if (GetCapability(ERenderingCapability::CULL_FACE))		result |= 0b0000'1000; // 是否开启面剔除
+	if (GetCapability(ERenderingCapability::DEPTH_TEST))	result |= 0b0001'0000; // 是否开启深度测试
 
 	switch (static_cast<ECullFace>(GetInt(GL_CULL_FACE)))
 	{
@@ -291,23 +308,27 @@ uint8_t OvRendering::Core::Renderer::FetchGLState()
 	return result;
 }
 
+/**
+* 设置渲染管线的状态
+* 
+*/
 void OvRendering::Core::Renderer::ApplyStateMask(uint8_t p_mask)
 {
 	if (p_mask != m_state)
 	{
 		using namespace OvRendering::Settings;
 
-		if ((p_mask & 0x01) != (m_state & 0x01))	SetDepthWriting(p_mask & 0x01);
-		if ((p_mask & 0x02) != (m_state & 0x02))	SetColorWriting(p_mask & 0x02);
-		if ((p_mask & 0x04) != (m_state & 0x04))	SetCapability(ERenderingCapability::BLEND, p_mask & 0x04);
-		if ((p_mask & 0x08) != (m_state & 0x08))	SetCapability(ERenderingCapability::CULL_FACE, p_mask & 0x8);
-		if ((p_mask & 0x10) != (m_state & 0x10))	SetCapability(ERenderingCapability::DEPTH_TEST, p_mask & 0x10);
+		if ((p_mask & 0x01) != (m_state & 0x01))	SetDepthWriting(p_mask & 0x01);  // 设置深度缓冲可写
+		if ((p_mask & 0x02) != (m_state & 0x02))	SetColorWriting(p_mask & 0x02);  // 设置颜色缓冲可写
+		if ((p_mask & 0x04) != (m_state & 0x04))	SetCapability(ERenderingCapability::BLEND, p_mask & 0x04); // 设置是否可混合
+		if ((p_mask & 0x08) != (m_state & 0x08))	SetCapability(ERenderingCapability::CULL_FACE, p_mask & 0x8); // 设置面剔除
+		if ((p_mask & 0x10) != (m_state & 0x10))	SetCapability(ERenderingCapability::DEPTH_TEST, p_mask & 0x10); // 设置深度测试
 
 		if ((p_mask & 0x08) && ((p_mask & 0x20) != (m_state & 0x20) || (p_mask & 0x40) != (m_state & 0x40)))
 		{
 			int backBit = p_mask & 0x20;
 			int frontBit = p_mask & 0x40;
-			SetCullFace(backBit && frontBit ? ECullFace::FRONT_AND_BACK : (backBit ? ECullFace::BACK : ECullFace::FRONT));
+			SetCullFace(backBit && frontBit ? ECullFace::FRONT_AND_BACK : (backBit ? ECullFace::BACK : ECullFace::FRONT)); // 设置面剔除的方向
 		}
 
 		m_state = p_mask;

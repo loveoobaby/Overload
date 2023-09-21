@@ -34,6 +34,7 @@ namespace OvTools::Eventing
 		* Also return the ID of the new listener (You should store the returned ID if you want to remove the listener later)
 		* @param p_call
 		*/
+		// 新增回调
 		ListenerID AddListener(Callback p_callback);
 
 		/**
@@ -72,7 +73,7 @@ namespace OvTools::Eventing
 		void Invoke(ArgTypes... p_args);
 
 	private:
-		std::unordered_map<ListenerID, Callback>	m_callbacks;
+		std::unordered_map<ListenerID, Callback>	m_callbacks; // 回调函数
 		ListenerID									m_availableListenerID = 0;
 	};
 }

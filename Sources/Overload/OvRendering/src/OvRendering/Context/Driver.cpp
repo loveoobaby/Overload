@@ -16,7 +16,7 @@ OvRendering::Context::Driver::Driver(const Settings::DriverSettings& p_driverSet
 	
 	m_isActive = true;
 
-	if (p_driverSettings.debugMode)
+	if (p_driverSettings.debugMode) // debug模式打开
 	{
 		GLint flags;
 		glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -38,6 +38,7 @@ bool OvRendering::Context::Driver::IsActive() const
 	return m_isActive;
 }
 
+// opengl debug模式回调函数
 void OvRendering::Context::Driver::GLDebugMessageCallback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity, int32_t length, const char* message, const void* userParam)
 {
 	// ignore non-significant error/warning codes
@@ -94,7 +95,7 @@ void OvRendering::Context::Driver::GLDebugMessageCallback(uint32_t source, uint3
 
 void OvRendering::Context::Driver::InitGlew()
 {
-	const GLenum error = glewInit();
+	const GLenum error = glewInit();// 初始化GLEW
 	if (error != GLEW_OK)
 	{
 		std::string message = "Error Init GLEW: ";

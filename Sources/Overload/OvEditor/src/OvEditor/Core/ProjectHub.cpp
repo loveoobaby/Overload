@@ -260,11 +260,11 @@ OvEditor::Core::ProjectHub::ProjectHub()
 
 std::tuple<bool, std::string, std::string> OvEditor::Core::ProjectHub::Run()
 {
-	m_renderer->SetClearColor(0.f, 0.f, 0.f, 1.f);
+	m_renderer->SetClearColor(0.f, 0.f, 0.f, 1.f); // 设置
 
-	while (!m_window->ShouldClose())
+	while (!m_window->ShouldClose()) // ProjectHub主循环
 	{
-		m_renderer->Clear();
+		m_renderer->Clear(); // 清屏
 		m_device->PollEvents();
 		m_uiManager->Render();
 		m_window->SwapBuffers();
@@ -293,6 +293,7 @@ void OvEditor::Core::ProjectHub::SetupContext()
 	m_window = std::make_unique<OvWindowing::Window>(*m_device, windowSettings); // 创建Project hub窗口
 	m_window->MakeCurrentContext();
 
+	// 设置窗口位置
 	auto[monWidth, monHeight] = m_device->GetMonitorSize();
 	auto[winWidth, winHeight] = m_window->GetSize();
 	m_window->SetPosition(monWidth / 2 - winWidth / 2, monHeight / 2 - winHeight / 2);
@@ -302,9 +303,9 @@ void OvEditor::Core::ProjectHub::SetupContext()
 	m_renderer = std::make_unique<OvRendering::Core::Renderer>(*m_driver);
 	m_renderer->SetCapability(OvRendering::Settings::ERenderingCapability::MULTISAMPLE, true);
 
-	m_uiManager = std::make_unique<OvUI::Core::UIManager>(m_window->GetGlfwWindow(), OvUI::Styling::EStyle::IM_LIGHT_STYLE);
-	m_uiManager->LoadFont("Ruda_Big", "Data\\Editor\\Fonts\\Ruda-Bold.ttf", 18); 
-	m_uiManager->UseFont("Ruda_Big");
+	m_uiManager = std::make_unique<OvUI::Core::UIManager>(m_window->GetGlfwWindow(), OvUI::Styling::EStyle::ALTERNATIVE_DARK);
+	m_uiManager->LoadFont("Ruda_Big", "Data\\Editor\\Fonts\\Ruda-Bold.ttf", 18); // 加载字体
+	m_uiManager->UseFont("Ruda_Big");                                            // 使用字体
 	m_uiManager->EnableEditorLayoutSave(false);
 	m_uiManager->EnableDocking(false);
 }

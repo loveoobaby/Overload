@@ -13,7 +13,9 @@ namespace OvTools::Eventing
 	template<class... ArgTypes>
 	ListenerID Event<ArgTypes...>::AddListener(Callback p_callback)
 	{
+		// 分配id
 		ListenerID listenerID = m_availableListenerID++;
+		// 插入回调map容器中
 		m_callbacks.emplace(listenerID, p_callback);
 		return listenerID;
 	}
@@ -24,6 +26,7 @@ namespace OvTools::Eventing
 		return AddListener(p_callback);
 	}
 
+	// 删除事件处理callback
 	template<class... ArgTypes>
 	bool Event<ArgTypes...>::RemoveListener(ListenerID p_listenerID)
 	{
@@ -36,6 +39,7 @@ namespace OvTools::Eventing
 		return RemoveListener(p_listenerID);
 	}
 
+	// 清空所有callback
 	template<class... ArgTypes>
 	void Event<ArgTypes...>::RemoveAllListeners()
 	{
@@ -48,6 +52,7 @@ namespace OvTools::Eventing
 		return m_callbacks.size();
 	}
 
+	// 启动事件处理
 	template<class... ArgTypes>
 	void Event<ArgTypes...>::Invoke(ArgTypes... p_args)
 	{

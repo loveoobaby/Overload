@@ -11,10 +11,10 @@
 #undef MessageBox
 
 OvWindowing::Dialogs::MessageBox::MessageBox(std::string p_title, std::string p_message, EMessageType p_messageType, EButtonLayout p_buttonLayout, bool p_autoSpawn) :
-	m_title(p_title),
-	m_message(p_message),
-	m_buttonLayout(p_buttonLayout),
-	m_messageType(p_messageType)
+	m_title(p_title),    // title
+	m_message(p_message), // message
+	m_buttonLayout(p_buttonLayout), // 按钮布局
+	m_messageType(p_messageType) // message类型
 {
 	if (p_autoSpawn)
 		Spawn();
@@ -27,6 +27,7 @@ const OvWindowing::Dialogs::MessageBox::EUserAction& OvWindowing::Dialogs::Messa
 
 void OvWindowing::Dialogs::MessageBox::Spawn()
 {
+	// 最终调用Widows API实现
 	int msgboxID = MessageBoxA
 	(
 		nullptr,

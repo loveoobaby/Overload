@@ -10,17 +10,18 @@
 #include "OvMaths/FMatrix4.h"
 
 OvRendering::LowRenderer::Camera::Camera() :
-    m_projectionMode(Settings::EProjectionMode::PERSPECTIVE),
-	m_fov(45.0f),
-    m_size(5.0f),
-	m_near(0.1f),
-	m_far(100.f),
-	m_clearColor(0.f, 0.f, 0.f),
-	m_frustumGeometryCulling(false),
-	m_frustumLightCulling(false)
+    m_projectionMode(Settings::EProjectionMode::PERSPECTIVE), // 透视相机
+	m_fov(45.0f), // 张角
+    m_size(5.0f), // 近平面宽度
+	m_near(0.1f), // 近平面
+	m_far(100.f), // 远平面
+	m_clearColor(0.f, 0.f, 0.f), 
+	m_frustumGeometryCulling(false), // 几何体视锥裁剪
+	m_frustumLightCulling(false)     // 灯光视锥体裁剪
 {
 }
 
+// 缓存相机矩阵
 void OvRendering::LowRenderer::Camera::CacheMatrices(uint16_t p_windowWidth, uint16_t p_windowHeight, const OvMaths::FVector3& p_position, const OvMaths::FQuaternion& p_rotation)
 {
 	CacheProjectionMatrix(p_windowWidth, p_windowHeight);

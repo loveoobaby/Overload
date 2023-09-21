@@ -11,6 +11,7 @@ namespace OvWindowing::Inputs
 	/**
 	* Defines some states that can be applied to keyboard keys
 	*/
+	// °´¼üµÄ×´Ì¬
 	enum class EKeyState
 	{
 		KEY_UP		= 0,

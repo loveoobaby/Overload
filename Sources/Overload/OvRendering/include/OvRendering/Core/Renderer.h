@@ -312,7 +312,7 @@ namespace OvRendering::Core
 		const FrameInfo& GetFrameInfo() const;
 
 	private:
-		Context::Driver&	m_driver;
+		Context::Driver&	m_driver; // Çý¶¯£¿
 		FrameInfo			m_frameInfo;
 		uint8_t				m_state;
 	};

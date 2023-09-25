@@ -96,14 +96,19 @@ void OvEditor::Panels::AView::SetGridColor(const OvMaths::FVector3& p_color)
 	m_gridColor = p_color;
 }
 
+// 设置Engine UBO
 void OvEditor::Panels::AView::FillEngineUBO()
 {
+	std::cout << "FillEngineUBO" << std::endl;
+	// 获取UBO
 	auto& engineUBO = *EDITOR_CONTEXT(engineUBO);
-
+	// 获取窗口的宽高
 	auto[winWidth, winHeight] = GetSafeSize();
 
 	size_t offset = sizeof(OvMaths::FMatrix4); // We skip the model matrix (Which is a special case, modified every draw calls)
+	// 设置视图矩阵
 	engineUBO.SetSubData(OvMaths::FMatrix4::Transpose(m_camera.GetViewMatrix()), std::ref(offset));
+	// 设置投影矩阵
 	engineUBO.SetSubData(OvMaths::FMatrix4::Transpose(m_camera.GetProjectionMatrix()), std::ref(offset));
 	engineUBO.SetSubData(m_cameraPosition, std::ref(offset));
 }

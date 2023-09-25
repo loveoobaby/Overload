@@ -110,7 +110,7 @@ namespace OvEditor::Core
 
 	private:
 		uint64_t m_elapsedFrames = 0;
-		OvUI::Modules::Canvas			m_canvas;
+		OvUI::Modules::Canvas			m_canvas;  // Ö÷Canvas
 		OvEditor::Core::Context&		m_context;
 		OvEditor::Core::EditorRenderer	m_editorRenderer;
 		OvEditor::Core::PanelsManager	m_panelsManager;

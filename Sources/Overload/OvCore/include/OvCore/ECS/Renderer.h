@@ -27,8 +27,11 @@ namespace OvCore::ECS
 	class Renderer : public OvRendering::Core::Renderer
 	{
 	public:
+		// 代表一个可渲染的对象，包括模型矩阵、网格、材料、
 		using Drawable				= std::tuple<OvMaths::FMatrix4, OvRendering::Resources::Mesh*, OvCore::Resources::Material*, OvMaths::FMatrix4>;
+		// 不透明物体
 		using OpaqueDrawables		= std::multimap<float, Drawable, std::less<float>>;
+		// 透明物体
 		using TransparentDrawables	= std::multimap<float, Drawable, std::greater<float>>;
 
 		/**

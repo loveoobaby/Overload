@@ -47,6 +47,7 @@ const OvRendering::Geometry::BoundingSphere& OvRendering::Resources::Mesh::GetBo
 	return m_boundingSphere;
 }
 
+// 
 void OvRendering::Resources::Mesh::CreateBuffers(const std::vector<Geometry::Vertex>& p_vertices, const std::vector<uint32_t>& p_indices)
 {
 	std::vector<float> vertexData;
@@ -80,6 +81,7 @@ void OvRendering::Resources::Mesh::CreateBuffers(const std::vector<Geometry::Ver
 
 	uint64_t vertexSize = sizeof(Geometry::Vertex);
 
+	// 设置VBO属性
 	m_vertexArray.BindAttribute(0, *m_vertexBuffer, Buffers::EType::FLOAT, 3, vertexSize, 0);
 	m_vertexArray.BindAttribute(1, *m_vertexBuffer,	Buffers::EType::FLOAT, 2, vertexSize, sizeof(float) * 3);
 	m_vertexArray.BindAttribute(2, *m_vertexBuffer,	Buffers::EType::FLOAT, 3, vertexSize, sizeof(float) * 5);
@@ -87,6 +89,7 @@ void OvRendering::Resources::Mesh::CreateBuffers(const std::vector<Geometry::Ver
 	m_vertexArray.BindAttribute(4, *m_vertexBuffer,	Buffers::EType::FLOAT, 3, vertexSize, sizeof(float) * 11);
 }
 
+// 计算Mesh的包围盒
 void OvRendering::Resources::Mesh::ComputeBoundingSphere(const std::vector<Geometry::Vertex>& p_vertices)
 {
 	m_boundingSphere.position = OvMaths::FVector3::Zero;

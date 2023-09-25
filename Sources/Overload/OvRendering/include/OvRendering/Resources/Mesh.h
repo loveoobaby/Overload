@@ -66,14 +66,14 @@ namespace OvRendering::Resources
 		void ComputeBoundingSphere(const std::vector<Geometry::Vertex>& p_vertices);
 
 	private:
-		const uint32_t m_vertexCount;
-		const uint32_t m_indicesCount;
-		const uint32_t m_materialIndex;
+		const uint32_t m_vertexCount; // 顶点数量
+		const uint32_t m_indicesCount; // 索引数量
+		const uint32_t m_materialIndex; // 材料编号
 
-		Buffers::VertexArray							m_vertexArray;
-		std::unique_ptr<Buffers::VertexBuffer<float>>	m_vertexBuffer;
-		std::unique_ptr<Buffers::IndexBuffer>			m_indexBuffer;
+		Buffers::VertexArray							m_vertexArray;  // VAO
+		std::unique_ptr<Buffers::VertexBuffer<float>>	m_vertexBuffer; // VBO
+		std::unique_ptr<Buffers::IndexBuffer>			m_indexBuffer;  // 索引数组EBO
 
-		Geometry::BoundingSphere m_boundingSphere;
+		Geometry::BoundingSphere m_boundingSphere; // 包围球
 	};
 }

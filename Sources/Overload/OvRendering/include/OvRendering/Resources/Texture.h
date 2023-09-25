@@ -41,13 +41,13 @@ namespace OvRendering::Resources
 		~Texture() = default;
 
 	public:
-		const uint32_t id;
-		const uint32_t width;
-		const uint32_t height;
-		const uint32_t bitsPerPixel;
+		const uint32_t id;  // 纹理id
+		const uint32_t width; // 纹理的宽
+		const uint32_t height; // 纹理的高
+		const uint32_t bitsPerPixel; 
 		const Settings::ETextureFilteringMode firstFilter;
 		const Settings::ETextureFilteringMode secondFilter;
-		const std::string path;
+		const std::string path; // 纹理文件路径
 		const bool isMimapped;
 	};
 }

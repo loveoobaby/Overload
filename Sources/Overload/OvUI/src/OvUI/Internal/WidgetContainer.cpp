@@ -8,6 +8,7 @@
 
 #include "OvUI/Internal/WidgetContainer.h"
 
+// 删除Widgets
 void OvUI::Internal::WidgetContainer::RemoveWidget(Widgets::AWidget& p_widget)
 {
 	auto found = std::find_if(m_widgets.begin(), m_widgets.end(), [&p_widget](std::pair<OvUI::Widgets::AWidget*, Internal::EMemoryMode>& p_pair)
@@ -24,6 +25,7 @@ void OvUI::Internal::WidgetContainer::RemoveWidget(Widgets::AWidget& p_widget)
 	}
 }
 
+// 清空所有Widgets
 void OvUI::Internal::WidgetContainer::RemoveAllWidgets()
 {
 	std::for_each(m_widgets.begin(), m_widgets.end(), [](auto& pair)
@@ -68,6 +70,7 @@ void OvUI::Internal::WidgetContainer::CollectGarbages()
 	}), m_widgets.end());
 }
 
+// 绘制Widgets
 void OvUI::Internal::WidgetContainer::DrawWidgets()
 {
 	CollectGarbages();

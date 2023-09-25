@@ -102,6 +102,7 @@ void OvEditor::Panels::MenuBar::CreateActorsMenu()
     Utils::ActorCreationMenu::GenerateActorCreationMenu(actorsMenu);
 }
 
+// 资源菜单
 void OvEditor::Panels::MenuBar::CreateResourcesMenu()
 {
 	auto& resourcesMenu = CreateWidget<MenuList>("Resources");
@@ -109,6 +110,7 @@ void OvEditor::Panels::MenuBar::CreateResourcesMenu()
 	resourcesMenu.CreateWidget<MenuItem>("Save materials").ClickedEvent += EDITOR_BIND(SaveMaterials);
 }
 
+// 设置菜单
 void OvEditor::Panels::MenuBar::CreateSettingsMenu()
 {
 	auto& settingsMenu = CreateWidget<MenuList>("Settings");
@@ -188,12 +190,14 @@ void OvEditor::Panels::MenuBar::CreateSettingsMenu()
 	subMenu.CreateWidget<MenuItem>("For lights", "", true, Settings::EditorSettings::ShowLightFrustumCullingInSceneView).ValueChangedEvent += [this](bool p_value) { Settings::EditorSettings::ShowLightFrustumCullingInSceneView = p_value; };
 }
 
+// layout菜单
 void OvEditor::Panels::MenuBar::CreateLayoutMenu() 
 {
 	auto& layoutMenu = CreateWidget<MenuList>("Layout");
 	layoutMenu.CreateWidget<MenuItem>("Reset").ClickedEvent += EDITOR_BIND(ResetLayout);
 }
 
+// help菜单
 void OvEditor::Panels::MenuBar::CreateHelpMenu()
 {
     auto& helpMenu = CreateWidget<MenuList>("Help");

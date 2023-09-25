@@ -15,6 +15,8 @@ namespace OvCore::API
 {
 	/**
 	* ISerializable is an interface for any class that can be serialized
+	* 
+	* 序列化与反序列化接口
 	*/
 	class ISerializable
 	{

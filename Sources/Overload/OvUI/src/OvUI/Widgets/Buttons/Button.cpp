@@ -13,10 +13,10 @@ OvUI::Widgets::Buttons::Button::Button(const std::string& p_label, const OvMaths
 {
 	auto& style = ImGui::GetStyle();
 
-	idleBackgroundColor		= Internal::Converter::ToColor(style.Colors[ImGuiCol_Button]);
-	hoveredBackgroundColor	= Internal::Converter::ToColor(style.Colors[ImGuiCol_ButtonHovered]);
-	clickedBackgroundColor	= Internal::Converter::ToColor(style.Colors[ImGuiCol_ButtonActive]);
-	textColor				= Internal::Converter::ToColor(style.Colors[ImGuiCol_Text]);
+	idleBackgroundColor		= Internal::Converter::ToColor(style.Colors[ImGuiCol_Button]); // 空闲的颜色
+	hoveredBackgroundColor	= Internal::Converter::ToColor(style.Colors[ImGuiCol_ButtonHovered]); // 悬浮颜色
+	clickedBackgroundColor	= Internal::Converter::ToColor(style.Colors[ImGuiCol_ButtonActive]); // 单击颜色
+	textColor				= Internal::Converter::ToColor(style.Colors[ImGuiCol_Text]); // 字体颜色
 }
 
 void OvUI::Widgets::Buttons::Button::_Draw_Impl()

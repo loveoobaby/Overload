@@ -83,6 +83,7 @@ std::vector<OvMaths::FMatrix4> OvCore::ECS::Renderer::FindLightMatricesInFrustum
 	return result;
 }
 
+// 渲染场景
 void OvCore::ECS::Renderer::RenderScene
 (
 	OvCore::SceneSystem::Scene& p_scene,
@@ -95,6 +96,7 @@ void OvCore::ECS::Renderer::RenderScene
 	OpaqueDrawables	opaqueMeshes;
 	TransparentDrawables transparentMeshes;
 
+	// 找出透明与不透明物体
 	if (p_camera.HasFrustumGeometryCulling())
 	{
 		const auto& frustum = p_customFrustum ? *p_customFrustum : p_camera.GetFrustum();
@@ -105,9 +107,11 @@ void OvCore::ECS::Renderer::RenderScene
 		std::tie(opaqueMeshes, transparentMeshes) = FindAndSortDrawables(p_scene, p_cameraPosition, p_defaultMaterial);
 	}
 
+	// 绘制不透明物体
 	for (const auto& [distance, drawable] : opaqueMeshes)
 		DrawDrawable(drawable);
 
+	// 绘制透明物体
 	for (const auto& [distance, drawable] : transparentMeshes)
 		DrawDrawable(drawable);
 }

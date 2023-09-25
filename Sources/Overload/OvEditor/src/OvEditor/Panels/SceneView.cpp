@@ -62,7 +62,7 @@ void OvEditor::Panels::SceneView::Update(float p_deltaTime)
 
 void OvEditor::Panels::SceneView::_Render_Impl()
 {
-	PrepareCamera();
+	PrepareCamera(); // ¸üĞÂÉãÏñ»ú
 
 	auto& baseRenderer = *EDITOR_CONTEXT(renderer).get();
 
@@ -74,6 +74,7 @@ void OvEditor::Panels::SceneView::_Render_Impl()
 	baseRenderer.ApplyStateMask(glState);
 }
 
+// äÖÈ¾³¡¾°
 void OvEditor::Panels::SceneView::RenderScene(uint8_t p_defaultRenderState)
 {
 	auto& baseRenderer = *EDITOR_CONTEXT(renderer).get();
@@ -96,7 +97,9 @@ void OvEditor::Panels::SceneView::RenderScene(uint8_t p_defaultRenderState)
 	baseRenderer.Clear(m_camera);
 	baseRenderer.SetStencilMask(0x00);
 
+	// äÖÈ¾±à¼­Æ÷Íø¸ñÏß
 	m_editorRenderer.RenderGrid(m_cameraPosition, m_gridColor);
+	// äÖÈ¾ÉãÏñ»ú
 	m_editorRenderer.RenderCameras();
 
 	// If the game is playing, and ShowGeometryFrustumCullingInSceneView is true, apply the game view frustum culling to the scene view (For debugging purposes)
@@ -111,6 +114,7 @@ void OvEditor::Panels::SceneView::RenderScene(uint8_t p_defaultRenderState)
 		m_editorRenderer.RenderScene(m_cameraPosition, m_camera);
 	}
 
+	// äÖÈ¾µÆ¹â
 	m_editorRenderer.RenderLights();
 
 	if (EDITOR_EXEC(IsAnyActorSelected()))

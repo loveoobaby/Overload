@@ -168,8 +168,10 @@ void OvUI::Core::UIManager::ApplyStyle(Styling::EStyle p_style)
     }
 }
 
+// 加载字体
 bool OvUI::Core::UIManager::LoadFont(const std::string& p_id, const std::string & p_path, float p_fontSize)
 {
+	// 没有找到字体就进行加载
 	if (m_fonts.find(p_id) == m_fonts.end())
 	{
 		auto& io = ImGui::GetIO();
@@ -185,6 +187,7 @@ bool OvUI::Core::UIManager::LoadFont(const std::string& p_id, const std::string 
 	return false;
 }
 
+// 卸载字体
 bool OvUI::Core::UIManager::UnloadFont(const std::string & p_id)
 {
 	if (m_fonts.find(p_id) != m_fonts.end())
@@ -196,6 +199,7 @@ bool OvUI::Core::UIManager::UnloadFont(const std::string & p_id)
 	return false;
 }
 
+// 使用字体
 bool OvUI::Core::UIManager::UseFont(const std::string & p_id)
 {
 	auto foundFont = m_fonts.find(p_id);
@@ -209,11 +213,13 @@ bool OvUI::Core::UIManager::UseFont(const std::string & p_id)
 	return false;
 }
 
+// 使用系统默认字体
 void OvUI::Core::UIManager::UseDefaultFont()
 {
 	ImGui::GetIO().FontDefault = nullptr;
 }
 
+// 开启Layout保存
 void OvUI::Core::UIManager::EnableEditorLayoutSave(bool p_value)
 {
 	if (p_value)
@@ -222,11 +228,13 @@ void OvUI::Core::UIManager::EnableEditorLayoutSave(bool p_value)
 		ImGui::GetIO().IniFilename = nullptr;
 }
 
+// 是否可以保存Layout
 bool OvUI::Core::UIManager::IsEditorLayoutSaveEnabled() const
 {
 	return ImGui::GetIO().IniFilename != nullptr;
 }
 
+// 设置layout保存文件
 void OvUI::Core::UIManager::SetEditorLayoutSaveFilename(const std::string & p_filename)
 {
 	m_layoutSaveFilename = p_filename;
@@ -234,6 +242,7 @@ void OvUI::Core::UIManager::SetEditorLayoutSaveFilename(const std::string & p_fi
 		ImGui::GetIO().IniFilename = m_layoutSaveFilename.c_str();
 }
 
+// 设置layout保存频率
 void OvUI::Core::UIManager::SetEditorLayoutAutosaveFrequency(float p_frequency)
 {
 	ImGui::GetIO().IniSavingRate = p_frequency;
@@ -244,6 +253,7 @@ float OvUI::Core::UIManager::GetEditorLayoutAutosaveFrequency(float p_frequeny)
 	return ImGui::GetIO().IniSavingRate;
 }
 
+// 是否允许停靠
 void OvUI::Core::UIManager::EnableDocking(bool p_value)
 {
 	m_dockingState = p_value;
@@ -254,6 +264,7 @@ void OvUI::Core::UIManager::EnableDocking(bool p_value)
 		ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_DockingEnable;
 }
 
+// 重置layout
 void OvUI::Core::UIManager::ResetLayout(const std::string& p_config) const
 {
     ImGui::LoadIniSettingsFromDisk(p_config.c_str());
@@ -264,6 +275,7 @@ bool OvUI::Core::UIManager::IsDockingEnabled() const
 	return m_dockingState;
 }
 
+// 保存canvas
 void OvUI::Core::UIManager::SetCanvas(Modules::Canvas& p_canvas)
 {
 	RemoveCanvas();
@@ -271,11 +283,13 @@ void OvUI::Core::UIManager::SetCanvas(Modules::Canvas& p_canvas)
 	m_currentCanvas = &p_canvas;
 }
 
+// 删除canvas
 void OvUI::Core::UIManager::RemoveCanvas()
 {
 	m_currentCanvas = nullptr;
 }
 
+//进行渲染
 void OvUI::Core::UIManager::Render()
 {
 	if (m_currentCanvas)

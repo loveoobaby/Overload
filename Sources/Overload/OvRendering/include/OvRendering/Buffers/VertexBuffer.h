@@ -53,7 +53,7 @@ namespace OvRendering::Buffers
 		uint32_t GetID();
 
 	private:
-		uint32_t m_bufferID;
+		uint32_t m_bufferID; // VBOµÄid
 	};
 }
 

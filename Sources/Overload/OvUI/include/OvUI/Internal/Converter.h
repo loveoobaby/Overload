@@ -16,6 +16,7 @@ namespace OvUI::Internal
 {
 	/**
 	* Handles imgui conversion to/from overload types
+	* 转换工具类
 	*/
 	class Converter
 	{

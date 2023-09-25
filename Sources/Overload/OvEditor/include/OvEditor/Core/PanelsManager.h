@@ -46,6 +46,7 @@ namespace OvEditor::Core
 				m_panels.emplace(p_id, std::make_unique<T>(std::forward<Args>(p_args)...));
 			}
 
+			// 将面板加入主canvas中
 			m_canvas.AddPanel(*m_panels.at(p_id));
 		}
 

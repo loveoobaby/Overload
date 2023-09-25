@@ -18,6 +18,7 @@ namespace OvCore::SceneSystem
 {
 	/**
 	* The scene is a set of actors
+	* 场景中包含一系列Actor
 	*/
 	class Scene : public API::ISerializable
 	{
@@ -163,7 +164,7 @@ namespace OvCore::SceneSystem
 	private:
 		int64_t m_availableID = 1;
 		bool m_isPlaying = false;
-		std::vector<ECS::Actor*> m_actors;
+		std::vector<ECS::Actor*> m_actors; // 场景中的对象
 
 		FastAccessComponents m_fastAccessComponents;
 	};

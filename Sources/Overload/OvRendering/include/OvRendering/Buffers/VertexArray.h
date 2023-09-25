@@ -69,7 +69,7 @@ namespace OvRendering::Buffers
 		GLint GetID();
 
 	private:
-		GLuint m_bufferID;
+		GLuint m_bufferID; // VAOµÄid
 	};
 }
 

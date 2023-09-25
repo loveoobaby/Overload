@@ -36,7 +36,7 @@ OvEditor::Core::Editor::Editor(Context& p_context) :
 {
 	SetupUI();
 
-	m_context.sceneManager.LoadEmptyLightedScene();
+	m_context.sceneManager.LoadEmptyLightedScene(); // 加载空的场景，包含灯光
 }
 
 OvEditor::Core::Editor::~Editor()
@@ -51,7 +51,11 @@ void OvEditor::Core::Editor::SetupUI()
 	settings.collapsable = true;
 	settings.dockable = true;
 
+	// 编辑器各个Pannel，Pannel加入Canvas
+	// 菜单栏
 	m_panelsManager.CreatePanel<OvEditor::Panels::MenuBar>("Menu Bar");
+	
+	// Assert浏览器
 	m_panelsManager.CreatePanel<OvEditor::Panels::AssetBrowser>("Asset Browser", true, settings, m_context.engineAssetsPath, m_context.projectAssetsPath, m_context.projectScriptsPath);
 	m_panelsManager.CreatePanel<OvEditor::Panels::HardwareInfo>("Hardware Info", false, settings, 0.2f, 50);
 	m_panelsManager.CreatePanel<OvEditor::Panels::Profiler>("Profiler", true, settings, 0.25f);
@@ -65,6 +69,7 @@ void OvEditor::Core::Editor::SetupUI()
 	m_panelsManager.CreatePanel<OvEditor::Panels::MaterialEditor>("Material Editor", false, settings);
 	m_panelsManager.CreatePanel<OvEditor::Panels::ProjectSettings>("Project Settings", false, settings);
 	m_panelsManager.CreatePanel<OvEditor::Panels::AssetProperties>("Asset Properties", false, settings);
+
 
 	m_canvas.MakeDockspace(true);
 	m_context.uiManager->SetCanvas(m_canvas);

@@ -59,14 +59,17 @@ void OvCore::SceneSystem::SceneManager::LoadEmptyLightedScene()
 
 	SceneLoadEvent.Invoke();
 
+	// 生成平行光
 	auto& directionalLight = m_currentScene->CreateActor("Directional Light");
 	directionalLight.AddComponent<ECS::Components::CDirectionalLight>().SetIntensity(0.75f);
 	directionalLight.transform.SetLocalPosition({ 0.0f, 10.0f, 0.0f });
 	directionalLight.transform.SetLocalRotation(OvMaths::FQuaternion({ 120.0f, -40.0f, 0.0f }));
 
+	// 生成环境光
 	auto& ambientLight = m_currentScene->CreateActor("Ambient Light");
 	ambientLight.AddComponent<ECS::Components::CAmbientSphereLight>().SetRadius(10000.0f);
 
+	// 创建摄像机
 	auto& camera = m_currentScene->CreateActor("Main Camera");
 	camera.AddComponent<ECS::Components::CCamera>();
 	camera.transform.SetLocalPosition({ 0.0f, 3.0f, 8.0f });
@@ -110,11 +113,12 @@ bool OvCore::SceneSystem::SceneManager::LoadSceneFromMemory(tinyxml2::XMLDocumen
 	return false;
 }
 
+// 卸载当前场景
 void OvCore::SceneSystem::SceneManager::UnloadCurrentScene()
 {
 	if (m_currentScene)
 	{
-		delete m_currentScene;
+		delete m_currentScene; // 释放当前场景
 		m_currentScene = nullptr;
 		SceneUnloadEvent.Invoke();
 	}

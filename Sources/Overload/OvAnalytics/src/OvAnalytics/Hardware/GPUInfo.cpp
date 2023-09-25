@@ -6,6 +6,7 @@
 
 #include "OvAnalytics/Hardware/GPUInfo.h"
 
+// 获取GPU信息
 OvAnalytics::Hardware::GPUInfo::GPUInfo()
 {
 	#if _WIN32 || _WIN64
@@ -45,6 +46,7 @@ OvAnalytics::Hardware::GPUInfo::GPUInfo()
 	}
 }
 
+// 计算GPU负载
 float OvAnalytics::Hardware::GPUInfo::CalculateGPULoad()
 {
 	if (!m_NvAPIReady)

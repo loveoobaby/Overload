@@ -114,16 +114,19 @@ std::pair<std::string, std::string> OvRendering::Resources::Loaders::ShaderLoade
 	};
 }
 
+// 使用Shader创建Program
 uint32_t OvRendering::Resources::Loaders::ShaderLoader::CreateProgram(const std::string& p_vertexShader, const std::string& p_fragmentShader)
 {
+	// 创建Program
 	const uint32_t program = glCreateProgram();
 
+	// 编译Shader
 	const uint32_t vs = CompileShader(GL_VERTEX_SHADER, p_vertexShader);
 	const uint32_t fs = CompileShader(GL_FRAGMENT_SHADER, p_fragmentShader);
 
 	if (vs == 0 || fs == 0)
 		return 0;
-
+	OVLOG_INFO("conmpile verter shader: " + p_vertexShader);
 	glAttachShader(program, vs);
 	glAttachShader(program, fs);
 	glLinkProgram(program);
@@ -146,6 +149,7 @@ uint32_t OvRendering::Resources::Loaders::ShaderLoader::CreateProgram(const std:
 		return 0;
 	}
 
+	//  验证程序对象
 	glValidateProgram(program);
 	glDeleteShader(vs);
 	glDeleteShader(fs);

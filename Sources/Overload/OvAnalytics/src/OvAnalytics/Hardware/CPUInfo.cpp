@@ -6,12 +6,14 @@
 
 #include "OvAnalytics/Hardware/CPUInfo.h"
 
+// 获取CPU负载
 float OvAnalytics::Hardware::CPUInfo::CalculateCPULoad()
 {
 	FILETIME idleTime, kernelTime, userTime;
 	return GetSystemTimes(&idleTime, &kernelTime, &userTime) ? CalculateCPULoad(FileTimeToInt64(idleTime), FileTimeToInt64(kernelTime) + FileTimeToInt64(userTime)) : -100.0f;
 }
 
+// 获取GPU负载
 float OvAnalytics::Hardware::CPUInfo::CalculateCPULoad(uint64_t p_idleTicks, uint64_t p_totalTicks)
 {
 	uint64_t totalTicksSinceLastTime = p_totalTicks - m_cpuPreviousTotalTicks;

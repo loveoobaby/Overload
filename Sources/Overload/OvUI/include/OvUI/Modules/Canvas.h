@@ -28,12 +28,14 @@ namespace OvUI::Modules
 		* Adds a panel to the canvas
 		* @param p_panel
 		*/
+		// 向Canvas中增加面板
 		void AddPanel(Panels::APanel& p_panel);
 
 		/**
 		* Removes a panel from the canvas
 		* @param p_panel
 		*/
+		// 删除面板
 		void RemovePanel(Panels::APanel& p_panel);
 
 		/**
@@ -44,6 +46,7 @@ namespace OvUI::Modules
 		/**
 		* Makes the canvas a dockspace (Dockable panels will be able to attach themselves to the canvas)
 		*/
+		// docker面板
 		void MakeDockspace(bool p_state);
 
 		/**

@@ -5,7 +5,7 @@
 */
 
 #include "OvUI/Modules/Canvas.h"
-
+// 绘制Canvas
 void OvUI::Modules::Canvas::Draw()
 {
 	if (!m_panels.empty())
@@ -42,11 +42,13 @@ void OvUI::Modules::Canvas::Draw()
 	}
 }
 
+// 新增面板
 void OvUI::Modules::Canvas::AddPanel(Panels::APanel & p_panel)
 {
 	m_panels.push_back(std::ref(p_panel));
 }
 
+// 删除面板
 void OvUI::Modules::Canvas::RemovePanel(Panels::APanel & p_panel)
 {
 	m_panels.erase(std::remove_if(m_panels.begin(), m_panels.end(), [&p_panel](std::reference_wrapper<Panels::APanel>& p_item)
@@ -55,6 +57,7 @@ void OvUI::Modules::Canvas::RemovePanel(Panels::APanel & p_panel)
 	}));
 }
 
+// 删除所有面板
 void OvUI::Modules::Canvas::RemoveAllPanels()
 {
 	m_panels.clear();

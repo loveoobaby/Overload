@@ -19,6 +19,7 @@ std::unordered_map<std::string, uint64_t>		OvAnalytics::Profiling::Profiler::__C
 std::vector<std::thread::id>					OvAnalytics::Profiling::Profiler::__WORKING_THREADS;
 uint32_t										OvAnalytics::Profiling::Profiler::__ELAPSED_FRAMES;
 
+// ÐÔÄÜ¼ì²âÆ÷
 OvAnalytics::Profiling::Profiler::Profiler()
 {
 	m_lastTime = std::chrono::high_resolution_clock::now();

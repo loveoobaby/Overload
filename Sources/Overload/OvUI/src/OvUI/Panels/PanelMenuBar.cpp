@@ -6,6 +6,7 @@
 
 #include "OvUI/Panels/PanelMenuBar.h"
 
+// ªÊ÷∆≤Àµ•¿∏
 void OvUI::Panels::PanelMenuBar::_Draw_Impl()
 {
 	if (!m_widgets.empty() && ImGui::BeginMainMenuBar())

@@ -52,6 +52,7 @@ void OvEditor::Core::EditorActions::LoadEmptyScene()
 	if (GetCurrentEditorMode() != EEditorMode::EDIT)
 		StopPlaying();
 
+	// 加载一个空的场景 
 	m_context.sceneManager.LoadEmptyLightedScene();
 	OVLOG_INFO("New scene created");
 }
@@ -511,6 +512,7 @@ OvCore::ECS::Actor & OvEditor::Core::EditorActions::CreateEmptyActor(bool p_focu
 	return instance;
 }
 
+// 根据Path创建Actor，立方体、圆柱自带模型
 OvCore::ECS::Actor & OvEditor::Core::EditorActions::CreateActorWithModel(const std::string& p_path, bool p_focusOnCreation, OvCore::ECS::Actor* p_parent, const std::string& p_name)
 {
 	auto& instance = CreateEmptyActor(false, p_parent, p_name);

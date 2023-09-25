@@ -47,7 +47,9 @@ void OvEditor::Panels::GameView::Update(float p_deltaTime)
 
 void OvEditor::Panels::GameView::_Render_Impl()
 {
+	// 渲染器
 	auto& baseRenderer = *EDITOR_CONTEXT(renderer).get();
+	// 获取当前场景
 	auto& currentScene = *m_sceneManager.GetCurrentScene();
 
 	m_fbo.Bind();
@@ -68,6 +70,7 @@ void OvEditor::Panels::GameView::_Render_Impl()
 			m_editorRenderer.UpdateLights(currentScene);
 		}
 
+		// 渲染场景
 		m_editorRenderer.RenderScene(m_cameraPosition, m_camera);
 	}
 

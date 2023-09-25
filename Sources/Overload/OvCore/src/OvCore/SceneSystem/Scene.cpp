@@ -64,10 +64,12 @@ OvCore::ECS::Actor& OvCore::SceneSystem::Scene::CreateActor()
 	return CreateActor("New Actor");
 }
 
+// 创建
 OvCore::ECS::Actor& OvCore::SceneSystem::Scene::CreateActor(const std::string& p_name, const std::string& p_tag)
 {
 	m_actors.push_back(new OvCore::ECS::Actor(m_availableID++, p_name, p_tag, m_isPlaying));
 	ECS::Actor& instance = *m_actors.back();
+	// 绑定增加、删除组件事件
 	instance.ComponentAddedEvent	+= std::bind(&Scene::OnComponentAdded, this, std::placeholders::_1);
 	instance.ComponentRemovedEvent	+= std::bind(&Scene::OnComponentRemoved, this, std::placeholders::_1);
 	if (m_isPlaying)

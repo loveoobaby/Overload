@@ -13,7 +13,7 @@
 namespace OvRendering::Buffers
 {
 	/**
-	* Wraps OpenGL EBO
+	* Wraps OpenGL Framebuffer
 	*/
 	class Framebuffer
 	{

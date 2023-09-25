@@ -130,8 +130,8 @@ namespace OvUI::Core
 
 	private:
 		bool m_dockingState;
-		Modules::Canvas* m_currentCanvas = nullptr;
-		std::unordered_map<std::string, ImFont*> m_fonts;
+		Modules::Canvas* m_currentCanvas = nullptr; // 当前Canvas
+		std::unordered_map<std::string, ImFont*> m_fonts; // 使用的字体
 		std::string m_layoutSaveFilename = "imgui.ini";
 	};
 }

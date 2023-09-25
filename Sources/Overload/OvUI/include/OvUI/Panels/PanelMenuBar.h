@@ -19,6 +19,7 @@ namespace OvUI::Panels
 {
 	/**
 	* A simple panel that will be displayed on the top side of the canvas
+	* CanvasµÄ²Ëµ¥À¸
 	*/
 	class PanelMenuBar : public APanel
 	{

@@ -19,6 +19,7 @@ OvEditor::Panels::Toolbar::Toolbar
 	const OvUI::Settings::PanelWindowSettings& p_windowSettings
 ) : PanelWindow(p_title, p_opened, p_windowSettings)
 {
+	
 	std::string iconFolder = ":Textures/Icons/";
 
 	auto& textureManager = OvCore::Global::ServiceLocator::Get<OvCore::ResourceManagement::TextureManager>();

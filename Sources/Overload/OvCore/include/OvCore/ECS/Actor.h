@@ -329,7 +329,7 @@ namespace OvCore::ECS
 
 	private:
 		/* Settings */
-		std::string		m_name;
+		std::string		m_name; // 名称
 		std::string		m_tag;
 		bool			m_active = true;
 		bool&			m_playing;
@@ -343,9 +343,9 @@ namespace OvCore::ECS
 		bool	m_wasActive = false;
 
 		/* Parenting system stuff */
-		int64_t					m_parentID = 0;
-		Actor*					m_parent = nullptr;
-		std::vector<Actor*>		m_children;
+		int64_t					m_parentID = 0; // 父节点id
+		Actor*					m_parent = nullptr; // 父Actor
+		std::vector<Actor*>		m_children; // Actor的子节点列表
 
 		/* Actors components */
 		std::vector<std::shared_ptr<Components::AComponent>> m_components;

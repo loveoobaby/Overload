@@ -47,7 +47,7 @@ const OvRendering::Geometry::BoundingSphere& OvRendering::Resources::Mesh::GetBo
 	return m_boundingSphere;
 }
 
-// 
+// 创建Mesh的各种OpenGL buffer
 void OvRendering::Resources::Mesh::CreateBuffers(const std::vector<Geometry::Vertex>& p_vertices, const std::vector<uint32_t>& p_indices)
 {
 	std::vector<float> vertexData;

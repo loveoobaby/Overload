@@ -45,7 +45,7 @@ namespace OvEditor::Core
 	private:
 		std::unique_ptr<OvWindowing::Context::Device>		m_device;
 		std::unique_ptr<OvWindowing::Window>				m_window;
-		std::unique_ptr<OvRendering::Context::Driver>		m_driver;
+		std::unique_ptr<OvRendering::Context::Driver>		m_driver; // OpenGL Context
 		std::unique_ptr<OvRendering::Core::Renderer>		m_renderer;
 		std::unique_ptr<OvUI::Core::UIManager>				m_uiManager;
 

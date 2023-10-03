@@ -165,6 +165,7 @@ OvEditor::Core::EditorResources::EditorResources(const std::string& p_editorAsse
 	auto gridSource			= OvEditor::Resources::RawShaders::GetGrid();
 	auto gizmoSource		= OvEditor::Resources::RawShaders::GetGizmo();
 	auto billboardSource	= OvEditor::Resources::RawShaders::GetBillboard();
+	// ´´½¨GridµÄOpenGL Progrom
 	m_shaders["Grid"]		= ShaderLoader::CreateFromSource(gridSource.first, gridSource.second);
 	m_shaders["Gizmo"]		= ShaderLoader::CreateFromSource(gizmoSource.first, gizmoSource.second);
 	m_shaders["Billboard"]	= ShaderLoader::CreateFromSource(billboardSource.first, billboardSource.second);

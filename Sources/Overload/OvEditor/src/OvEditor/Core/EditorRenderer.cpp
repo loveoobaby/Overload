@@ -77,13 +77,13 @@ void OvEditor::Core::EditorRenderer::InitMaterials()
 	m_emptyMaterial.Set("u_Diffuse", FVector4(1.f, 0.f, 1.f, 1.0f));
 	m_emptyMaterial.Set<OvRendering::Resources::Texture*>("u_DiffuseMap", nullptr);
 
-	/* Grid Material */
+	/* Grid Material Grid的材质 */
 	m_gridMaterial.SetShader(m_context.editorResources->GetShader("Grid"));
 	m_gridMaterial.SetBlendable(true);
 	m_gridMaterial.SetBackfaceCulling(false);
 	m_gridMaterial.SetDepthTest(false);
 
-	/* Camera Material */
+	/* Camera Material 摄像机材料 */
 	m_cameraMaterial.SetShader(m_context.shaderManager[":Shaders\\Lambert.glsl"]);
 	m_cameraMaterial.Set("u_Diffuse", FVector4(0.0f, 0.3f, 0.7f, 1.0f));
 	m_cameraMaterial.Set<OvRendering::Resources::Texture*>("u_DiffuseMap", nullptr);
@@ -163,6 +163,14 @@ void OvEditor::Core::EditorRenderer::RenderScene(const OvMaths::FVector3& p_came
 	m_context.lightSSBO->Bind(0);
 	m_context.renderer->RenderScene(*m_context.sceneManager.GetCurrentScene(), p_cameraPosition, p_camera, p_customFrustum, &m_emptyMaterial);
 	m_context.lightSSBO->Unbind();
+}
+
+void OvEditor::Core::EditorRenderer::RenderDebugShader(const OvMaths::FVector3& p_viewPos, const OvMaths::FVector3& p_color) {
+	//constexpr float gridSize = 5000.0f;
+	//FMatrix4 model = FMatrix4::Translation({ p_viewPos.x, 0.0f, p_viewPos.z }) * FMatrix4::Scaling({ gridSize * 2.0f, 1.f, gridSize * 2.0f });
+	//m_gridMaterial.Set("u_Color", p_color);
+	//m_context.renderer->DrawModelWithSingleMaterial(*m_context.editorResources->GetModel("Plane"), m_gridMaterial, &model);
+
 }
 
 void OvEditor::Core::EditorRenderer::RenderSceneForActorPicking()

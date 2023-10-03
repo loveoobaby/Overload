@@ -6,6 +6,7 @@
 
 #include "OvEditor/Resources/RawShaders.h"
 
+// 获取Grid的Shader
 std::pair<std::string, std::string> OvEditor::Resources::RawShaders::GetGrid()
 {
 	std::pair<std::string, std::string> source;
@@ -40,6 +41,8 @@ void main()
     gl_Position = ubo_Projection * ubo_View * vec4(vs_out.FragPos, 1.0);
 }
 )";
+// Vertex Shader计算NDC坐标gl_Position，输出模型的世界坐标及纹理坐标，纹理坐标保存的是坐标的xz分量
+
 
 	source.second = R"(
 #version 430 core

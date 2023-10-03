@@ -1,4 +1,4 @@
-/**
+﻿/**
 * @project: Overload
 * @author: Overload Tech.
 * @licence: MIT
@@ -14,14 +14,15 @@ namespace OvRendering::Buffers
 {
 	/**
 	* Wraps OpenGL Framebuffer
+	* 封装OpenGL帧缓存对象
 	*/
 	class Framebuffer
 	{
 	public:
 		/**
 		* Create the framebuffer
-		* @param p_width
-		* @param p_height
+		* @param p_width 帧缓冲的宽
+		* @param p_height 帧缓存的高
 		*/
 		Framebuffer(uint16_t p_width = 0, uint16_t p_height = 0);
 
@@ -63,7 +64,7 @@ namespace OvRendering::Buffers
 		uint32_t GetRenderBufferID();
 
 	private:
-		uint32_t m_bufferID = 0;
+		uint32_t m_bufferID = 0; // 帧缓冲的id
 		uint32_t m_renderTexture = 0;
 		uint32_t m_depthStencilBuffer = 0;
 	};

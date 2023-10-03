@@ -44,6 +44,7 @@ namespace OvRendering::Core
 		/**
 		* Constructor of the Renderer
 		* @param p_driver
+		* renderer需要一个Driver
 		*/
 		Renderer(Context::Driver& p_driver);
 

@@ -16,6 +16,7 @@
 #undef APIENTRY
 #include "Windows.h"
 
+
 FORCE_DEDICATED_GPU
 
 /**
@@ -74,8 +75,10 @@ int main(int argc, char** argv)
 		}
 	}
 
-	if (ready)
+	if (ready) {
 		TryRun(projectPath, projectName);
+	}
+		
 
 	return EXIT_SUCCESS;
 }
@@ -90,15 +93,24 @@ static void TryRun(const std::string& projectPath, const std::string& projectNam
 		};
 
 	std::unique_ptr<OvEditor::Core::Application> app;
+	
 
-	try
-	{
+	//try
+	//{
 		auto listenerId = OvWindowing::Context::Device::ErrorEvent += errorEvent;
+		std::cout << "run:  "<< projectPath << " " << projectName << std::endl;
+		std::cout << std::filesystem::canonical("Data\\Engine").string() << std::endl;
 		app = std::make_unique<OvEditor::Core::Application>(projectPath, projectName);
+		std::cout << "run 2" << std::endl;
 		OvWindowing::Context::Device::ErrorEvent -= listenerId;
-	}
-	catch (...) {}
+	//}
+	//catch (...) {
+	//	std::cout << "run 3" << std::endl;
+	//}
 
-	if (app)
+	if (app) {
+		std::cout << "run " << std::endl;
 		app->Run();
+	}
+		
 }

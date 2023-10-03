@@ -11,11 +11,12 @@
 OvRendering::Buffers::Framebuffer::Framebuffer(uint16_t p_width, uint16_t p_height)
 {
 	/* Generate OpenGL objects */
-	glGenFramebuffers(1, &m_bufferID);
-	glGenTextures(1, &m_renderTexture);
+	glGenFramebuffers(1, &m_bufferID); // 生成帧缓冲id
+	glGenTextures(1, &m_renderTexture); // 生成颜色缓冲贴图
 	glGenRenderbuffers(1, &m_depthStencilBuffer);
 
 	/* Setup texture */
+	// 设置m_renderTexture纹理参数
 	glBindTexture(GL_TEXTURE_2D, m_renderTexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -23,6 +24,7 @@ OvRendering::Buffers::Framebuffer::Framebuffer(uint16_t p_width, uint16_t p_heig
 
 	/* Setup framebuffer */
 	Bind();
+	// 将纹理设置为渲染目标
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_renderTexture, 0);
 	Unbind();
 
@@ -50,6 +52,7 @@ void OvRendering::Buffers::Framebuffer::Unbind()
 void OvRendering::Buffers::Framebuffer::Resize(uint16_t p_width, uint16_t p_height)
 {
 	/* Resize texture */
+	// 设置纹理的大小
 	glBindTexture(GL_TEXTURE_2D, m_renderTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, p_width, p_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -61,6 +64,7 @@ void OvRendering::Buffers::Framebuffer::Resize(uint16_t p_width, uint16_t p_heig
 
 	/* Attach depth and stencil buffer to the framebuffer */
 	Bind();
+	// 配置深度缓冲与模板缓冲
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthStencilBuffer);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthStencilBuffer);
 	Unbind();

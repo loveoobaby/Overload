@@ -336,6 +336,8 @@ namespace OvEditor::Core
 		* Save the current scene to a new disk location (Can create a duplication of the scene file)
 		*/
 		void SaveAs();
+
+		void TestOcc();
 		#pragma endregion
 
 		#pragma region SCRIPTING

@@ -64,6 +64,8 @@ namespace OvEditor::Core
 		*/
 		void RenderSceneForActorPicking();
 
+		void RenderDebugShader(const OvMaths::FVector3& p_viewPos, const OvMaths::FVector3& p_color);
+
 		/**
 		* Render the User Interface
 		*/

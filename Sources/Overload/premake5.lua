@@ -17,6 +17,7 @@ include "OvRendering"
 include "OvTools"
 include "OvUI"
 include "OvWindowing"
+include "OvOcc"
 
 include "OvEditor"
 include "OvGame"

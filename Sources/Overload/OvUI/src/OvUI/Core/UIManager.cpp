@@ -5,6 +5,7 @@
 */
 
 #include "OvUI/Core/UIManager.h"
+#include <iostream>
 
 OvUI::Core::UIManager::UIManager(GLFWwindow* p_glfwWindow, Styling::EStyle p_style, const std::string& p_glslVersion)
 {
@@ -172,6 +173,7 @@ void OvUI::Core::UIManager::ApplyStyle(Styling::EStyle p_style)
 bool OvUI::Core::UIManager::LoadFont(const std::string& p_id, const std::string & p_path, float p_fontSize)
 {
 	// 没有找到字体就进行加载
+	std::cout << "LoadFont" << std::endl;
 	if (m_fonts.find(p_id) == m_fonts.end())
 	{
 		auto& io = ImGui::GetIO();

@@ -12,6 +12,7 @@ namespace OvRendering::Settings
 {
 	/**
 	* OpenGL comparaison algorithm enum wrapper
+	* 深度测试支持的方法
 	*/
 	enum class EComparaisonAlgorithm
 	{

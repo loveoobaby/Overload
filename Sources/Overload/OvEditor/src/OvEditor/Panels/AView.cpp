@@ -99,7 +99,6 @@ void OvEditor::Panels::AView::SetGridColor(const OvMaths::FVector3& p_color)
 // 设置Engine UBO
 void OvEditor::Panels::AView::FillEngineUBO()
 {
-	std::cout << "FillEngineUBO" << std::endl;
 	// 获取UBO
 	auto& engineUBO = *EDITOR_CONTEXT(engineUBO);
 	// 获取窗口的宽高

@@ -12,10 +12,10 @@ OvRendering::Core::ShapeDrawer::ShapeDrawer(OvRendering::Core::Renderer& p_rende
 	std::vector<Geometry::Vertex> vertices;
 	vertices.push_back
 	({
-		0, 0, 0,
-		0, 0,
-		0, 0, 0,
-		0, 0, 0,
+		0, 0, 0,// 坐标
+		0, 0,   // 纹理
+		0, 0, 0,// 法线
+		0, 0, 0,// 切线
 		0, 0, 0
 	});
 	vertices.push_back
@@ -29,6 +29,7 @@ OvRendering::Core::ShapeDrawer::ShapeDrawer(OvRendering::Core::Renderer& p_rende
 
 	m_lineMesh = new Resources::Mesh(vertices, { 0, 1 }, 0);
 
+	// 线的Shader
 	std::string vertexShader = R"(
 #version 430 core
 
@@ -56,7 +57,7 @@ void main()
 	FRAGMENT_COLOR = vec4(color, 1.0);
 }
 )";
-
+	// 编译线的Shader
 	m_lineShader = OvRendering::Resources::Loaders::ShaderLoader::CreateFromSource(vertexShader, fragmentShader);
 
 	vertexShader = R"(
@@ -105,7 +106,7 @@ void main()
 	FRAGMENT_COLOR = vec4(color, AlphaFromAttenuation());
 }
 )";
-
+	// 编译Grid的Shader
 	m_gridShader = OvRendering::Resources::Loaders::ShaderLoader::CreateFromSource(vertexShader, fragmentShader);
 }
 
@@ -145,30 +146,30 @@ void OvRendering::Core::ShapeDrawer::DrawLine(const OvMaths::FVector3& p_start, 
 
 void OvRendering::Core::ShapeDrawer::DrawGrid(const OvMaths::FVector3& p_viewPos, const OvMaths::FVector3& p_color, int32_t p_gridSize, float p_linear, float p_quadratic, float p_fadeThreshold, float p_lineWidth)
 {
-	m_gridShader->Bind();
-	m_gridShader->SetUniformVec3("color", p_color);
-	m_gridShader->SetUniformVec3("viewPos", p_viewPos);
-	m_gridShader->SetUniformFloat("linear", p_linear);
-	m_gridShader->SetUniformFloat("quadratic", p_quadratic);
-	m_gridShader->SetUniformFloat("fadeThreshold", p_fadeThreshold);
+	//m_gridShader->Bind();
+	//m_gridShader->SetUniformVec3("color", p_color);
+	//m_gridShader->SetUniformVec3("viewPos", p_viewPos);
+	//m_gridShader->SetUniformFloat("linear", p_linear);
+	//m_gridShader->SetUniformFloat("quadratic", p_quadratic);
+	//m_gridShader->SetUniformFloat("fadeThreshold", p_fadeThreshold);
 
-	m_renderer.SetRasterizationMode(OvRendering::Settings::ERasterizationMode::LINE);
-	m_renderer.SetRasterizationLinesWidth(p_lineWidth);
-	m_renderer.SetCapability(OvRendering::Settings::ERenderingCapability::BLEND, true);
+	//m_renderer.SetRasterizationMode(OvRendering::Settings::ERasterizationMode::LINE);
+	//m_renderer.SetRasterizationLinesWidth(p_lineWidth);
+	//m_renderer.SetCapability(OvRendering::Settings::ERenderingCapability::BLEND, true);
 
-	for (int32_t i = -p_gridSize + 1; i < p_gridSize; ++i)
-	{
-		m_gridShader->SetUniformVec3("start", { -(float)p_gridSize + std::floor(p_viewPos.x), 0.f, (float)i + std::floor(p_viewPos.z) });
-		m_gridShader->SetUniformVec3("end", { (float)p_gridSize + std::floor(p_viewPos.x), 0.f, (float)i + std::floor(p_viewPos.z) });
-		m_renderer.Draw(*m_lineMesh, Settings::EPrimitiveMode::LINES);
+	//for (int32_t i = -p_gridSize + 1; i < p_gridSize; ++i)
+	//{
+	//	m_gridShader->SetUniformVec3("start", { -(float)p_gridSize + std::floor(p_viewPos.x), 0.f, (float)i + std::floor(p_viewPos.z) });
+	//	m_gridShader->SetUniformVec3("end", { (float)p_gridSize + std::floor(p_viewPos.x), 0.f, (float)i + std::floor(p_viewPos.z) });
+	//	m_renderer.Draw(*m_lineMesh, Settings::EPrimitiveMode::LINES);
 
-		m_gridShader->SetUniformVec3("start", { (float)i + std::floor(p_viewPos.x), 0.f, -(float)p_gridSize + std::floor(p_viewPos.z) });
-		m_gridShader->SetUniformVec3("end", { (float)i + std::floor(p_viewPos.x), 0.f, (float)p_gridSize + std::floor(p_viewPos.z) });
-		m_renderer.Draw(*m_lineMesh, Settings::EPrimitiveMode::LINES);
-	}
+	//	m_gridShader->SetUniformVec3("start", { (float)i + std::floor(p_viewPos.x), 0.f, -(float)p_gridSize + std::floor(p_viewPos.z) });
+	//	m_gridShader->SetUniformVec3("end", { (float)i + std::floor(p_viewPos.x), 0.f, (float)p_gridSize + std::floor(p_viewPos.z) });
+	//	m_renderer.Draw(*m_lineMesh, Settings::EPrimitiveMode::LINES);
+	//}
 
-	m_renderer.SetCapability(OvRendering::Settings::ERenderingCapability::BLEND, false);
-	m_renderer.SetRasterizationLinesWidth(1.0f);
-	m_renderer.SetRasterizationMode(OvRendering::Settings::ERasterizationMode::FILL);
-	m_gridShader->Unbind();
+	//m_renderer.SetCapability(OvRendering::Settings::ERenderingCapability::BLEND, false);
+	//m_renderer.SetRasterizationLinesWidth(1.0f);
+	//m_renderer.SetRasterizationMode(OvRendering::Settings::ERasterizationMode::FILL);
+	//m_gridShader->Unbind();
 }

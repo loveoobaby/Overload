@@ -1,4 +1,4 @@
-/**
+﻿/**
 * @project: Overload
 * @author: Overload Tech.
 * @licence: MIT
@@ -26,7 +26,8 @@ namespace OvRendering::Buffers
 	};
 
 	/**
-	* Wraps OpenGL VAO
+	* Wraps OpenGL VAO 
+	* VAO对象的封装
 	*/
 	class VertexArray
 	{
@@ -69,7 +70,7 @@ namespace OvRendering::Buffers
 		GLint GetID();
 
 	private:
-		GLuint m_bufferID; // VAO��id
+		GLuint m_bufferID; // VAO的id
 	};
 }
 

@@ -19,15 +19,17 @@ namespace OvRendering::Resources
 {
 	/**
 	* Standard mesh of OvRendering
+	* 
+	* 定义的网格
 	*/
 	class Mesh : public IMesh
 	{
 	public:
 		/**
 		* Create a mesh with the given vertices, indices and material index
-		* @param p_vertices
-		* @param p_indices
-		* @param p_materialIndex
+		* @param p_vertices： 顶点数据
+		* @param p_indices： 索引数据
+		* @param p_materialIndex  材料索引
 		*/
 		Mesh(const std::vector<Geometry::Vertex>& p_vertices, const std::vector<uint32_t>& p_indices, uint32_t p_materialIndex);
 
@@ -58,6 +60,8 @@ namespace OvRendering::Resources
 
 		/**
 		* Returns the bounding sphere of the mesh
+		* 
+		* mesh的包围球
 		*/
 		const OvRendering::Geometry::BoundingSphere& GetBoundingSphere() const;
 

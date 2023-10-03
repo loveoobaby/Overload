@@ -95,7 +95,7 @@ void OvRendering::Context::Driver::GLDebugMessageCallback(uint32_t source, uint3
 
 void OvRendering::Context::Driver::InitGlew()
 {
-	const GLenum error = glewInit();// 初始化GLEW
+	const GLenum error = glewInit();// 初始化OpenGL rendering context
 	if (error != GLEW_OK)
 	{
 		std::string message = "Error Init GLEW: ";

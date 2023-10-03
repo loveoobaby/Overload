@@ -14,6 +14,7 @@ namespace OvRendering::Resources
 {
 	/**
 	* Interface for any mesh
+	* Íø¸ñµÄ³éÏó
 	*/
 	class IMesh
 	{

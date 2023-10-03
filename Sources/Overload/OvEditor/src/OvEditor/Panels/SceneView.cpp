@@ -12,6 +12,8 @@
 #include "OvEditor/Panels/GameView.h"
 #include "OvEditor/Settings/EditorSettings.h"
 
+using namespace OvMaths;
+
 OvEditor::Panels::SceneView::SceneView
 (
 	const std::string& p_title,
@@ -60,6 +62,7 @@ void OvEditor::Panels::SceneView::Update(float p_deltaTime)
 	}
 }
 
+// 场景视图窗口绘制实现
 void OvEditor::Panels::SceneView::_Render_Impl()
 {
 	PrepareCamera(); // 更新摄像机
@@ -161,14 +164,15 @@ void OvEditor::Panels::SceneView::RenderSceneForActorPicking()
 	m_actorPickingFramebuffer.Bind();
 	baseRenderer.SetClearColor(1.0f, 1.0f, 1.0f);
 	baseRenderer.Clear();
-	m_editorRenderer.RenderSceneForActorPicking();
+	m_editorRenderer.RenderDebugShader(this->m_cameraPosition, this->m_gridColor);
 
-	if (EDITOR_EXEC(IsAnyActorSelected()))
-	{
-		auto& selectedActor = EDITOR_EXEC(GetSelectedActor());
-		baseRenderer.Clear(false, true, false);
-		m_editorRenderer.RenderGizmo(selectedActor.transform.GetWorldPosition(), selectedActor.transform.GetWorldRotation(), m_currentOperation, true);
-	}
+
+	//if (EDITOR_EXEC(IsAnyActorSelected()))
+	//{
+	//	auto& selectedActor = EDITOR_EXEC(GetSelectedActor());
+	//	baseRenderer.Clear(false, true, false);
+	//	m_editorRenderer.RenderGizmo(selectedActor.transform.GetWorldPosition(), selectedActor.transform.GetWorldRotation(), m_currentOperation, true);
+	//}
 
 	m_actorPickingFramebuffer.Unbind();
 }
@@ -198,9 +202,10 @@ void OvEditor::Panels::SceneView::HandleActorPicking()
 
 	if (IsHovered() && !IsResizing())
 	{
+		std::cout << "pick object" << std::endl;
 		RenderSceneForActorPicking();
 
-		// Look actor under mouse
+		// 获取鼠标的位置
 		auto [mouseX, mouseY] = inputManager.GetMousePosition();
 		mouseX -= m_position.x;
 		mouseY -= m_position.y;
@@ -212,6 +217,7 @@ void OvEditor::Panels::SceneView::HandleActorPicking()
 		m_actorPickingFramebuffer.Unbind();
 
 		uint32_t actorID = (0 << 24) | (pixel[2] << 16) | (pixel[1] << 8) | (pixel[0] << 0);
+		std::cout << "actorID = " << actorID << std::endl;
 		auto actorUnderMouse = EDITOR_CONTEXT(sceneManager).GetCurrentScene()->FindActorByID(actorID);
 		auto direction = m_gizmoOperations.IsPicking() ? m_gizmoOperations.GetDirection() : EDITOR_EXEC(IsAnyActorSelected()) && pixel[0] == 255 && pixel[1] == 255 && pixel[2] >= 252 && pixel[2] <= 254 ? static_cast<OvEditor::Core::GizmoBehaviour::EDirection>(pixel[2] - 252) : std::optional<Core::GizmoBehaviour::EDirection>{};
 

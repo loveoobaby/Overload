@@ -24,6 +24,7 @@
 #include <OvTools/Utils/PathParser.h>
 #include <OvTools/Utils/String.h>
 #include <OvTools/Utils/SystemCalls.h>
+#include <primarty.h>
 
 #include "OvEditor/Core/EditorActions.h"
 #include "OvEditor/Panels/SceneView.h"
@@ -32,6 +33,7 @@
 #include "OvEditor/Panels/Inspector.h"
 #include "OvEditor/Panels/ProjectSettings.h"
 #include "OvEditor/Panels/MaterialEditor.h"
+
 
 OvEditor::Core::EditorActions::EditorActions(Context& p_context, EditorRenderer& p_editorRenderer, PanelsManager& p_panelsManager) :
 	m_context(p_context), 
@@ -117,6 +119,13 @@ void OvEditor::Core::EditorActions::SaveAs()
 		SaveCurrentSceneTo(dialog.GetSelectedFilePath());
 		OVLOG_INFO("Current scene saved to: " + dialog.GetSelectedFilePath());
 	}
+}
+
+void OvEditor::Core::EditorActions::TestOcc()
+{
+	OvOcc::Occ::TestOcc a;
+	a.makeBox();
+	
 }
 
 void OvEditor::Core::EditorActions::RefreshScripts()

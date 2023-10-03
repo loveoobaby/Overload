@@ -23,6 +23,8 @@ namespace OvCore::ECS
 	/**
 	* A Renderer capable of rendering stuffs linked with the ECS. It is a convenient class that should be used instead of OvRendering::Core::Renderer
 	* when you plan to use the OvCore ECS architecture.
+	* 
+	* äÖÈ¾Æ÷
 	*/
 	class Renderer : public OvRendering::Core::Renderer
 	{

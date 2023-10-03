@@ -44,16 +44,19 @@ void OvRendering::Core::Renderer::Clear(OvRendering::LowRenderer::Camera & p_cam
 	SetClearColor(previousClearColor[0], previousClearColor[1], previousClearColor[2], previousClearColor[3]);
 }
 
+// 设置线光栅化宽度，默认是1
 void OvRendering::Core::Renderer::SetRasterizationLinesWidth(float p_width)
 {
 	glLineWidth(p_width);
 }
 
+// 指定是画点、线、面
 void OvRendering::Core::Renderer::SetRasterizationMode(Settings::ERasterizationMode p_rasterizationMode)
 {
 	glPolygonMode(GL_FRONT_AND_BACK, static_cast<GLenum>(p_rasterizationMode));
 }
 
+// 设置OpenGL启用或关闭一些功能
 void OvRendering::Core::Renderer::SetCapability(Settings::ERenderingCapability p_capability, bool p_value)
 {
 	(p_value ? glEnable : glDisable)(static_cast<GLenum>(p_capability));
@@ -104,11 +107,13 @@ void OvRendering::Core::Renderer::SetColorWriting(bool p_enable)
 	glColorMask(p_enable, p_enable, p_enable, p_enable);
 }
 
+// 设置视口大小
 void OvRendering::Core::Renderer::SetViewPort(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 {
 	glViewport(x, y, width, height);
 }
 
+// 从FrameBuffer中读取数据
 void OvRendering::Core::Renderer::ReadPixels(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Settings::EPixelDataFormat format, Settings::EPixelDataType type, void* data)
 {
 	glReadPixels(x, y, width, height, static_cast<GLenum>(format), static_cast<GLenum>(type), data);
